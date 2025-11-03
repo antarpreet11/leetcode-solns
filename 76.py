@@ -1,4 +1,4 @@
-# Sliding window, TIme - O(n), Space - O(26)
+# Sliding window, TIme - O(n), Space - O(n)
 from collections import defaultdict
 
 class Solution:
