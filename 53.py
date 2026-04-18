@@ -1,4 +1,4 @@
-# Time - O(n), Space - O(n) 
+# Time - O(n), Space - O(1) 
 # Kadane's algorithm
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
