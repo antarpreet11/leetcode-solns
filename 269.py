@@ -3,38 +3,45 @@ class Solution:
     def foreignDictionary(self, words: List[str]) -> str:
         adj = {c : set() for w in words for c in w}
 
-        for i in range(len(words) - 1):
+        for i in range(len(words) - 1): 
             w1, w2 = words[i], words[i + 1]
-            length = min(len(w1), len(w2))
+            minLen = min(len(w1), len(w2))
 
-            if w1[:length] == w2[:length] and len(w1) > len(w2):
+            if w1[:minLen] == w2[:minLen] and len(w1) > len(w2):
                 return ""
-
-            for c in range(length):
-                if w1[c] != w2[c]:
-                    adj[w1[c]].add(w2[c])
-                    break
-        
-        visit = {} # False=visited, True=current path
-        res = []
-
-        def dfs(c):
-            if c in visit:
-                return visit[c]
             
-            visit[c] = True
+            for j in range(minLen):
+                if w1[j] != w2[j]:
+                    adj[w1[j]].add(w2[j])
+                    break
 
-            for nei in adj[c]:
-                if dfs(nei):
-                    return True
+        result = []
+        visit = set()
+        visiting = set()
 
-            visit[c] = False
-            res.append(c)
+        def dfs(ch):
+            if ch in visiting:
+                return False
+            if ch in visit:
+                return True
+            
+            visiting.add(ch)
 
-        for char in adj: 
-            if dfs(char):
+            for nei in adj[ch]:
+                if not dfs(nei):
+                    return False
+            
+            visiting.remove(ch)
+            visit.add(ch)
+            result.append(ch)
+            return True
+
+        for ch in adj:
+            if not dfs(ch):
                 return ""
 
-        res.reverse()
-        return "".join(res)
+        result.reverse()
+        return "".join(result)
+
+
 
